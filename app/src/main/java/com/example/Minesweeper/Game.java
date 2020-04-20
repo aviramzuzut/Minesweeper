@@ -24,7 +24,7 @@ import static com.example.Minesweeper.MainActivity.WIDTH_MEDIUM;
 
 public class Game extends AppCompatActivity {
 
-
+        public static final String ACTIVITY_RESULT_KEY = "Activity_result_key";
         private static final String TAG = "GameActivity";
         public static Game instance;
         public int bombNumber;
@@ -35,7 +35,7 @@ public class Game extends AppCompatActivity {
         }
 
         public int getWidth() {
-            return width;
+            return this.width;
         }
 
         public int getHeight() {
@@ -144,6 +144,30 @@ public class Game extends AppCompatActivity {
 
             if (bombNotFound == 0 && notRevealed == 0) {
                 Toast.makeText(context, "Game won", Toast.LENGTH_SHORT).show();
+
+                new Thread() {
+                    @Override
+                    public void run() {
+
+                        // doLongOperation();
+
+
+                        try {
+
+                            // code runs in a thread
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Intent intent =new Intent(getBaseContext(), FinishActivity.class);
+                                    intent.putExtra(ACTIVITY_RESULT_KEY, 1);
+                                    startActivity(intent);
+                                }
+                            });
+                        } catch (final Exception ex) {
+                            Log.i("---","Exception in thread");
+                        }
+                    }
+                }.start();
             }
             return false;
         }
@@ -174,6 +198,33 @@ public class Game extends AppCompatActivity {
                     getCellAt(x, y).setRevealed();
                 }
             }
+
+
+            new Thread() {
+                @Override
+                public void run() {
+
+                    // doLongOperation();
+
+
+                    try {
+
+                        // code runs in a thread
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Intent intent =new Intent(getBaseContext(), FinishActivity.class);
+                                intent.putExtra(ACTIVITY_RESULT_KEY, 2);
+                                startActivity(intent);
+                            }
+                        });
+                    } catch (final Exception ex) {
+                        Log.i("---","Exception in thread");
+                    }
+                }
+            }.start();
+
+
         }
 
 

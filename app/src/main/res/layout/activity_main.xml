@@ -10,22 +10,27 @@
     <TextView
         android:id="@+id/text"
         android:layout_width="147dp"
-        android:layout_height="55dp"
+        android:layout_height="0dp"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
+        android:layout_marginStart="6dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="166dp"
         android:text="Minesweeper"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="6dp"
-        tools:layout_editor_absoluteY="16dp" />
+        app:layout_constraintBottom_toTopOf="@+id/text_difficulty"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/text_difficulty"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="141dp"
+        android:layout_marginBottom="40dp"
         android:text="Choose difficulty"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="141dp"
-        tools:layout_editor_absoluteY="237dp" />
+        app:layout_constraintBottom_toTopOf="@+id/button1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text" />
 
     <Button
         android:id="@+id/button1"
@@ -33,11 +38,13 @@
         android:layout_height="wrap_content"
         android:layout_alignTop="@id/button2"
         android:layout_centerHorizontal="true"
+        android:layout_marginStart="7dp"
+        android:layout_marginBottom="13dp"
         android:tag="Easy"
         android:text="Easy"
-        tools:layout_editor_absoluteX="148dp"
-        tools:layout_editor_absoluteY="296dp"
-        tools:ignore="MissingConstraints" />
+        app:layout_constraintBottom_toTopOf="@+id/button2"
+        app:layout_constraintStart_toStartOf="@+id/text_difficulty"
+        app:layout_constraintTop_toBottomOf="@+id/text_difficulty" />
 
     <Button
         android:id="@+id/button2"
@@ -45,11 +52,12 @@
         android:layout_height="wrap_content"
         android:layout_alignTop="@id/button3"
         android:layout_centerHorizontal="true"
+        android:layout_marginBottom="17dp"
         android:tag="Medium"
         android:text="Medium"
-        tools:layout_editor_absoluteX="148dp"
-        tools:layout_editor_absoluteY="357dp"
-        tools:ignore="MissingConstraints" />
+        app:layout_constraintBottom_toTopOf="@+id/button3"
+        app:layout_constraintStart_toStartOf="@+id/button1"
+        app:layout_constraintTop_toBottomOf="@+id/button1" />
 
     <Button
         android:id="@+id/button3"
@@ -57,11 +65,12 @@
         android:layout_height="wrap_content"
         android:layout_alignBottom="@id/text"
         android:layout_centerHorizontal="true"
+        android:layout_marginBottom="261dp"
         android:tag="Hard"
         android:text="Hard"
-        tools:layout_editor_absoluteX="148dp"
-        tools:layout_editor_absoluteY="422dp"
-        tools:ignore="MissingConstraints" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/button2"
+        app:layout_constraintTop_toBottomOf="@+id/button2" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
