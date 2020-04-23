@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
+import com.example.Minesweeper.Logic.Tile;
 import com.example.Minesweeper.R;
 
 public class MainActivity extends AppCompatActivity {
@@ -45,6 +46,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 difficulty diff = difficulty.Easy;
+
+                Game game = Game.getInstance();
+                game.setWidth(WIDTH_EASY);
+                game.setHeight(HEIGHT_EASY);
+                game.setBombNumber(BOMB_NUMBER_EASY);
+                game.MinesweeperGrid = new Tile[WIDTH_EASY][HEIGHT_EASY];
+                game.createGrid(game.getBaseContext());
                 startGameActivity(1);
             }
         });
@@ -53,6 +61,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 difficulty diff = difficulty.Medium;
+                Game game = Game.getInstance();
+                game.setHeight(HEIGHT_MEDIUM);
+                game.setWidth(WIDTH_MEDIUM);
+                game.setBombNumber(BOMB_NUMBER_MEDIUM);
+                game.MinesweeperGrid = new Tile[WIDTH_MEDIUM][HEIGHT_MEDIUM];
+                game.createGrid(game.getBaseContext());
                 startGameActivity(2);
             }
         });
@@ -61,6 +75,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 difficulty diff = difficulty.Hard;
+                Game game = Game.getInstance();
+                game.setWidth(WIDTH_EASY);
+                game.setHeight(HEIGHT_EASY);
+                game.setBombNumber(BOMB_NUMBER_EASY);
+                game.MinesweeperGrid = new Tile[WIDTH_EASY][HEIGHT_EASY];
+                // game.createGrid(game.getBaseContext());
                 startGameActivity(1);
             }
         });

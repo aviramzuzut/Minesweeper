@@ -50,7 +50,7 @@ public class Game extends AppCompatActivity {
         public int height;
         private Context context;
 
-        private Tile[][] MinesweeperGrid;
+        public Tile[][] MinesweeperGrid;
 
         public static Game getInstance() {
             if (instance == null) {
@@ -77,19 +77,19 @@ public class Game extends AppCompatActivity {
 
             // create the grid and store it
 
-            int[][] GeneratedGrid = Generator.generate(this.getBombNumber(), this.getWidth(), this.getHeight());
-            print(GeneratedGrid, this.getWidth(), this.getHeight());
-            setGrid(context, GeneratedGrid, this.getWidth(), this.getHeight());
+            int[][] GeneratedGrid = Generator.generate(Game.getInstance().getBombNumber(), Game.getInstance().getWidth(), Game.getInstance().getHeight());
+            print(GeneratedGrid, Game.getInstance().getWidth(), Game.getInstance().getHeight());
+            setGrid(context, GeneratedGrid, Game.getInstance().getWidth(), Game.getInstance().getHeight());
         }
 
         private void setGrid(final Context context, final int[][] grid, int WIDTH, int HEIGHT) {
             for (int x = 0; x < WIDTH; x++) {
                 for (int y = 0; y < HEIGHT; y++) {
-                    if (MinesweeperGrid[x][y] == null) {
-                        MinesweeperGrid[x][y] = new Tile(context, x, y);
+                    if (Game.getInstance().MinesweeperGrid[x][y] == null) {
+                        Game.getInstance().MinesweeperGrid[x][y] = new Tile(context, x, y);
                     }
-                    MinesweeperGrid[x][y].setValue(grid[x][y]);
-                    MinesweeperGrid[x][y].invalidate();
+                    Game.getInstance().MinesweeperGrid[x][y].setValue(grid[x][y]);
+                    Game.getInstance().MinesweeperGrid[x][y].invalidate();
                 }
             }
         }
@@ -158,7 +158,7 @@ public class Game extends AppCompatActivity {
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    Intent intent =new Intent(getBaseContext(), FinishActivity.class);
+                                    Intent intent =new Intent(context, FinishActivity.class);
                                     intent.putExtra(ACTIVITY_RESULT_KEY, 1);
                                     startActivity(intent);
                                 }
@@ -214,7 +214,7 @@ public class Game extends AppCompatActivity {
                             @Override
                             public void run() {
                                 Intent intent =new Intent(getBaseContext(), FinishActivity.class);
-                                intent.putExtra(ACTIVITY_RESULT_KEY, 2);
+                                intent.putExtra(ACTIVITY_RESULT_KEY, 1);
                                 startActivity(intent);
                             }
                         });
@@ -238,35 +238,7 @@ public class Game extends AppCompatActivity {
         if(intent != null){
             int diffChoosen = intent.getIntExtra(MainActivity.ACTIVITY_RESULT_KEY, 0);
             Game game = Game.getInstance();
-            switch (diffChoosen)
-            {
-                case 1:
-
-                    game.setWidth(WIDTH_EASY);
-                    game.setHeight(HEIGHT_EASY);
-                    game.setBombNumber(BOMB_NUMBER_EASY);
-                    game.MinesweeperGrid = new Tile[WIDTH_EASY][HEIGHT_EASY];
-                    game.createGrid(this);
-                    break;
-                case 2:
-
-                    game.setWidth(WIDTH_MEDIUM);
-                    game.setHeight(HEIGHT_MEDIUM);
-                    game.setBombNumber(BOMB_NUMBER_MEDIUM);
-                    game.MinesweeperGrid = new Tile[WIDTH_MEDIUM][HEIGHT_MEDIUM];
-                    game.createGrid(this);
-                    break;
-                case 3:
-
-                    game.setWidth(WIDTH_HARD);
-                    game.setHeight(HEIGHT_HARD);
-                    game.setBombNumber(BOMB_NUMBER_HARD);
-                    game.MinesweeperGrid = new Tile[WIDTH_HARD][HEIGHT_HARD];
-                    game.createGrid(this);
-                    break;
-                default:
-                    throw new IllegalStateException("Unexpected value: " + diffChoosen);
-            }
+            game.createGrid(this);
 
         }
     }
