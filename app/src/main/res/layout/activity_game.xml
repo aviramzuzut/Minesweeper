@@ -2,18 +2,27 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-<TableLayout android:layout_width="380dp"
-    android:layout_height="100dp">
+<TableLayout
+    android:layout_width="380dp"
+    android:layout_height="100dp"
 
-    <TableRow android:layout_height="55dp">
+    >
+
+
+    <TableRow
+
+        android:layout_width="380dp"
+        android:layout_height="100dp"
+        android:gravity="center">
 
         <TextView
 
             android:id="@+id/Timer"
 
-            android:layout_column="0"
+            android:text="@string/_start_timer"
 
-            android:text="000" />
+
+            />
 
         <ImageButton
             android:id="@+id/Smiley"
@@ -25,13 +34,7 @@
 
             android:background="@drawable/smiley_button" />
 
-        <TextView
 
-            android:id="@+id/MineCount"
-
-            android:layout_column="2"
-
-            android:text="000" />
     </TableRow>
 </TableLayout>
 

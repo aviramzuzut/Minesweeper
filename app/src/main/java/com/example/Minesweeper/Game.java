@@ -10,6 +10,9 @@ import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 import com.example.Minesweeper.Logic.Generator;
 import com.example.Minesweeper.Logic.Tile;
 import com.example.Minesweeper.R;
@@ -191,6 +194,7 @@ public class Game extends AppCompatActivity {
 
         }
 
+        int time = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -199,15 +203,40 @@ public class Game extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
-
-        txtMineCount = (TextView) findViewById(R.id.MineCount);
+        //creating Timer
+        //txtMineCount = (TextView) findViewById(R.id.MineCount);
         txtTimer = (TextView) findViewById(R.id.Timer);
 
         // set font style for timer and mine count to LCD style
         Typeface lcdFont = Typeface.createFromAsset(getAssets(),
                 "fonts/lcd2mono.ttf");
-        txtMineCount.setTypeface(lcdFont);
+        //txtMineCount.setTypeface(lcdFont);
         txtTimer.setTypeface(lcdFont);
+
+        //Declare the timer
+        Timer t = new Timer();
+        //Set the schedule function and rate
+        t.scheduleAtFixedRate(new TimerTask() {
+
+                                  @Override
+                          public void run() {
+                              //Called each time when 1000 milliseconds (1 second) (the period parameter)
+                              //We must use this function in order to change the text view text
+                              runOnUiThread(new Runnable() {
+                                  @Override
+                                  public void run() {
+                                    //  TextView tv = (TextView) findViewById(R.id.Timer);
+                                      txtTimer.setText(String.valueOf(time));
+                                      time += 1;
+                                  }
+                              });
+                          }
+                      },
+                // how long before to start calling the TimerTask (in milliseconds)
+                0,
+                  //Set the amount of time between each execution (in milliseconds)
+                1000);
+
 
         Intent intent = getIntent();
         if(intent != null){

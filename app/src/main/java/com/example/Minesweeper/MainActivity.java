@@ -25,9 +25,9 @@ public class MainActivity extends AppCompatActivity {
     public static final int HEIGHT_MEDIUM = 16;
 
     // Hard
-    public static final int BOMB_NUMBER_HARD = 99;
-    public static final int WIDTH_HARD = 30;
-    public static final int HEIGHT_HARD = 16;
+    public static final int BOMB_NUMBER_HARD = 75;
+    public static final int WIDTH_HARD = 16;
+    public static final int HEIGHT_HARD = 23;
 
     private static final String TAG = "MainActivity";
     public static final String ACTIVITY_RESULT_KEY = "Activity_result_key";
@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     public enum difficulty{
         Easy, Medium, Hard;
     }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,6 +83,12 @@ public class MainActivity extends AppCompatActivity {
                 startGameActivity(3);
             }
         });
+
+        //for finish activity
+        if (getIntent().getBooleanExtra("EXIT", false)) {
+
+            finish();
+        }
     }
 
     private void startGameActivity(final int diff) {
@@ -110,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }.start();
-
+        mProgressDialog.dismiss();
     }
 
     @Override
@@ -142,11 +149,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
         Log.d(TAG, "onStop started");
+
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         Log.d(TAG, "onDestory started");
+
     }
 }
