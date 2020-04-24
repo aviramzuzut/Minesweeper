@@ -52,7 +52,6 @@ public class MainActivity extends AppCompatActivity {
                 game.setHeight(HEIGHT_EASY);
                 game.setBombNumber(BOMB_NUMBER_EASY);
                 game.MinesweeperGrid = new Tile[WIDTH_EASY][HEIGHT_EASY];
-                game.createGrid(game.getBaseContext());
                 startGameActivity(1);
             }
         });
@@ -66,7 +65,6 @@ public class MainActivity extends AppCompatActivity {
                 game.setWidth(WIDTH_MEDIUM);
                 game.setBombNumber(BOMB_NUMBER_MEDIUM);
                 game.MinesweeperGrid = new Tile[WIDTH_MEDIUM][HEIGHT_MEDIUM];
-                game.createGrid(game.getBaseContext());
                 startGameActivity(2);
             }
         });
@@ -76,12 +74,12 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 difficulty diff = difficulty.Hard;
                 Game game = Game.getInstance();
-                game.setWidth(WIDTH_EASY);
-                game.setHeight(HEIGHT_EASY);
-                game.setBombNumber(BOMB_NUMBER_EASY);
-                game.MinesweeperGrid = new Tile[WIDTH_EASY][HEIGHT_EASY];
+                game.setWidth(WIDTH_HARD);
+                game.setHeight(HEIGHT_HARD);
+                game.setBombNumber(BOMB_NUMBER_HARD);
+                game.MinesweeperGrid = new Tile[WIDTH_HARD][HEIGHT_HARD];
                 // game.createGrid(game.getBaseContext());
-                startGameActivity(1);
+                startGameActivity(3);
             }
         });
     }

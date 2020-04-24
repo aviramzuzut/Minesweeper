@@ -4,8 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.Minesweeper.Logic.Generator;
@@ -29,6 +31,9 @@ public class Game extends AppCompatActivity {
         public static Game instance;
         public int bombNumber;
         public int width;
+        private TextView txtMineCount;
+        private TextView txtTimer;
+
 
         public int getBombNumber() {
             return bombNumber;
@@ -145,29 +150,9 @@ public class Game extends AppCompatActivity {
             if (bombNotFound == 0 && notRevealed == 0) {
                 Toast.makeText(context, "Game won", Toast.LENGTH_SHORT).show();
 
-                new Thread() {
-                    @Override
-                    public void run() {
-
-                        // doLongOperation();
-
-
-                        try {
-
-                            // code runs in a thread
-                            runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    Intent intent =new Intent(context, FinishActivity.class);
-                                    intent.putExtra(ACTIVITY_RESULT_KEY, 1);
-                                    startActivity(intent);
-                                }
-                            });
-                        } catch (final Exception ex) {
-                            Log.i("---","Exception in thread");
-                        }
-                    }
-                }.start();
+                Intent intent =new Intent(this, FinishActivity.class);
+                intent.putExtra(ACTIVITY_RESULT_KEY, 2);
+                startActivity(intent);
             }
             return false;
         }
@@ -200,30 +185,9 @@ public class Game extends AppCompatActivity {
             }
 
 
-            new Thread() {
-                @Override
-                public void run() {
-
-                    // doLongOperation();
-
-
-                    try {
-
-                        // code runs in a thread
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                Intent intent =new Intent(getBaseContext(), FinishActivity.class);
-                                intent.putExtra(ACTIVITY_RESULT_KEY, 1);
-                                startActivity(intent);
-                            }
-                        });
-                    } catch (final Exception ex) {
-                        Log.i("---","Exception in thread");
-                    }
-                }
-            }.start();
-
+            Intent intent =new Intent(Game.getInstance().context, FinishActivity.class);
+            intent.putExtra(ACTIVITY_RESULT_KEY, 1);
+            Game.getInstance().context.startActivity(intent);
 
         }
 
@@ -231,8 +195,19 @@ public class Game extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.d(TAG,"Game onCreate!!!");
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
+
+
+        txtMineCount = (TextView) findViewById(R.id.MineCount);
+        txtTimer = (TextView) findViewById(R.id.Timer);
+
+        // set font style for timer and mine count to LCD style
+        Typeface lcdFont = Typeface.createFromAsset(getAssets(),
+                "fonts/lcd2mono.ttf");
+        txtMineCount.setTypeface(lcdFont);
+        txtTimer.setTypeface(lcdFont);
 
         Intent intent = getIntent();
         if(intent != null){

@@ -1,5 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<TableLayout android:layout_width="380dp"
+    android:layout_height="100dp">
+
+    <TableRow android:layout_height="55dp">
+
+        <TextView
+
+            android:id="@+id/Timer"
+
+            android:layout_column="0"
+
+            android:text="000" />
+
+        <ImageButton
+            android:id="@+id/Smiley"
+
+            android:layout_width="48px"
+            android:layout_height="48px"
+
+            android:layout_column="1"
+
+            android:background="@drawable/smiley_button" />
+
+        <TextView
+
+            android:id="@+id/MineCount"
+
+            android:layout_column="2"
+
+            android:text="000" />
+    </TableRow>
+</TableLayout>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -13,4 +49,5 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"/>
+</RelativeLayout>
 </RelativeLayout>

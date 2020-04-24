@@ -14,9 +14,9 @@ public class Generator {
         // Random for generating numbers
         Random r = new Random();
 
-        final int[][][] grid = {new int[width][height]};
+        int[][] grid = new int[width][height];
         for( int x = 0 ; x< width ;x++ ){
-            grid[0][x] = new int[height];
+            grid[x] = new int[height];
         }
 
         while( bombNumber > 0 ){
@@ -24,29 +24,16 @@ public class Generator {
             int y = r.nextInt(height);
 
             // -1 is the bomb
-            if( grid[0][x][y] != -1 ){
-                grid[0][x][y] = -1;
+            if( grid[x][y] != -1 ){
+                grid[x][y] = -1;
                 bombNumber--;
             }
         }
 
-        new Thread() {
-            @Override
-            public void run() {
-
-                // doLongOperation();
-                grid[0] = calculateNeighbours(grid[0],width,height);
+        grid = calculateNeighbours(grid,width,height);
 
 
-                try {
-                } catch (final Exception ex) {
-                    Log.i("---","Exception in thread");
-                }
-            }
-        }.start();
-
-
-        return grid[0];
+        return grid;
     }
 
     private static int[][] calculateNeighbours( int[][] grid , final int width , final int height){
