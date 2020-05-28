@@ -4,7 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -13,6 +16,8 @@ import com.example.Minesweeper.Logic.Tile;
 import com.example.Minesweeper.R;
 
 public class MainActivity extends AppCompatActivity {
+
+    int savedDiff = 4;
 
     // Easy
     public static final int BOMB_NUMBER_EASY = 10;
@@ -42,12 +47,23 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Log.d(TAG, "onCreate started");
+        getLastDifficultyChosen();
+
+        if(savedDiff == 0 ){
+            findViewById(R.id.button1).setBackgroundColor(Color.GREEN);
+        }
+        if(savedDiff == 1 ){
+            findViewById(R.id.button2).setBackgroundColor(Color.GREEN);
+        }
+        if(savedDiff == 2 ){
+            findViewById(R.id.button3).setBackgroundColor(Color.GREEN);
+        }
+
 
         findViewById(R.id.button1).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 difficulty diff = difficulty.Easy;
-
                 Game game = Game.getInstance();
                 game.setWidth(WIDTH_EASY);
                 game.setHeight(HEIGHT_EASY);
@@ -92,7 +108,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void startGameActivity(final int diff) {
-
+        //save chosen difficulty
+        Context context = getBaseContext();
+        SharedPreferences sharedPref = context.getSharedPreferences(
+                getString(R.string.preference_file_mins_difficulty), Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putInt(getString(R.string.saved_difficulty_key), diff);
+        editor.commit();
+         //start the game
         Dialog mProgressDialog = ProgressDialog.show(this, "Please wait", "Long operation starts...", true);
         new Thread() {
             @Override
@@ -120,6 +143,15 @@ public class MainActivity extends AppCompatActivity {
         mProgressDialog.dismiss();
     }
 
+    protected int getLastDifficultyChosen() {
+
+        Context context = getBaseContext();
+        SharedPreferences sharedPref = context.getSharedPreferences(
+                getString(R.string.preference_file_mins_difficulty) ,Context.MODE_PRIVATE);
+        savedDiff = sharedPref.getInt(getString(R.string.saved_difficulty_key),4);
+
+        return savedDiff;
+    }
     @Override
     protected void onStart() {
         super.onStart();
