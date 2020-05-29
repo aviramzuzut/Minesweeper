@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,6 +15,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import com.example.Minesweeper.Logic.Generator;
+import com.example.Minesweeper.Logic.Record;
 import com.example.Minesweeper.Logic.Tile;
 import com.example.Minesweeper.R;
 
@@ -36,6 +38,7 @@ public class Game extends AppCompatActivity {
         public int width;
         private TextView txtMineCount;
         private TextView txtTimer;
+        public int clickCounter = 0;
 
 
         public int getBombNumber() {
@@ -115,6 +118,7 @@ public class Game extends AppCompatActivity {
 
         public void click(int x, int y) {
             if (x >= 0 && y >= 0 && x < this.getWidth() && y < this.getHeight() && !getCellAt(x, y).isClicked()) {
+                this.clickCounter++;
                 getCellAt(x, y).setClicked();
 
                 if (getCellAt(x, y).getValue() == 0) {
@@ -152,6 +156,28 @@ public class Game extends AppCompatActivity {
 
             if (bombNotFound == 0 && notRevealed == 0) {
                 Toast.makeText(context, "Game won", Toast.LENGTH_SHORT).show();
+
+                Context context = getBaseContext();
+                SharedPreferences sharedPref = context.getSharedPreferences(
+                        getString(R.string.preference_file_mins_records_easy) ,Context.MODE_PRIVATE);
+                String allRecs = sharedPref.getString(String.valueOf(R.string.saved_difficulty_key),"");
+                String[] record = allRecs.split(",");
+
+                for(int i=0; i<= record.length; i ++){
+                    Record rec = new Record();
+                    String[] vals = record[i].split("_");
+                    rec.name = vals[0];
+                    rec.clickCounter = Integer.parseInt(vals[1]);
+                    rec.time = Integer.parseInt(vals[2]);
+
+                    //Check if current player is better
+                    if(this.time >= rec.time || this.clickCounter >= rec.clickCounter){
+                        SharedPreferences.Editor editor = sharedPref.edit();
+                        editor.putString(getString(R.string.saved_difficulty_key), "" + "_" + this.clickCounter
+                                + "_" + this.time);
+                        editor.commit();
+                    }
+                }
 
                 Intent intent =new Intent(this, FinishActivity.class);
                 intent.putExtra(ACTIVITY_RESULT_KEY, 2);

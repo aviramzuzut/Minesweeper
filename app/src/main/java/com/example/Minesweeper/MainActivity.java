@@ -17,7 +17,7 @@ import com.example.Minesweeper.R;
 
 public class MainActivity extends AppCompatActivity {
 
-    int savedDiff = 4;
+    int savedDiff;
 
     // Easy
     public static final int BOMB_NUMBER_EASY = 10;
@@ -49,13 +49,13 @@ public class MainActivity extends AppCompatActivity {
         Log.d(TAG, "onCreate started");
         getLastDifficultyChosen();
 
-        if(savedDiff == 0 ){
+        if(savedDiff == 1 ){
             findViewById(R.id.button1).setBackgroundColor(Color.GREEN);
         }
-        if(savedDiff == 1 ){
+        if(savedDiff == 2 ){
             findViewById(R.id.button2).setBackgroundColor(Color.GREEN);
         }
-        if(savedDiff == 2 ){
+        if(savedDiff == 3 ){
             findViewById(R.id.button3).setBackgroundColor(Color.GREEN);
         }
 

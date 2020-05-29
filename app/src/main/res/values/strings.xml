@@ -11,4 +11,8 @@
     <string name="textview_finish">TextView</string>
     <string name="preference_file_mins_difficulty" ></string>
     <string name="saved_difficulty_key" ></string>
+    <string name="preference_file_mins_records_easy" ></string>
+    <string name="preference_file_mins_records_medium" ></string>
+    <string name="preference_file_mins_records_hard" ></string>
+
 </resources>
