@@ -1,6 +1,8 @@
 package com.example.Minesweeper;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -12,6 +14,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
+import com.example.Minesweeper.Logic.RecordsFragment;
 import com.example.Minesweeper.Logic.Tile;
 import com.example.Minesweeper.R;
 
@@ -97,6 +100,20 @@ public class MainActivity extends AppCompatActivity {
                 game.MinesweeperGrid = new Tile[WIDTH_HARD][HEIGHT_HARD];
                 // game.createGrid(game.getBaseContext());
                 startGameActivity(3);
+            }
+        });
+
+
+        findViewById(R.id.button4).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+                RecordsFragment fragment = new RecordsFragment();
+
+                fragmentTransaction.add(R.id.fragment_records, fragment);
+                fragmentTransaction.commit();
             }
         });
 
