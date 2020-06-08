@@ -12,6 +12,8 @@ import androidx.core.content.ContextCompat;
 import com.example.Minesweeper.Game;
 import com.example.Minesweeper.R;
 
+import java.util.Random;
+
 
 public class Tile extends BaseTile implements View.OnClickListener , View.OnLongClickListener{
 
@@ -47,6 +49,8 @@ public class Tile extends BaseTile implements View.OnClickListener , View.OnLong
         super.onDraw(canvas);
         Log.d("Minesweeper" , "Cell::onDraw");
         drawButton(canvas);
+
+
 
         if( isFlagged() ){
             drawFlag(canvas);

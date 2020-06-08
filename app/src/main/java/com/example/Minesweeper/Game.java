@@ -5,12 +5,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.time.chrono.HijrahDate;
+import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -29,7 +32,7 @@ import static com.example.Minesweeper.MainActivity.WIDTH_EASY;
 import static com.example.Minesweeper.MainActivity.WIDTH_HARD;
 import static com.example.Minesweeper.MainActivity.WIDTH_MEDIUM;
 
-public class Game extends AppCompatActivity {
+public class Game extends AppCompatActivity  {
 
         public static final String ACTIVITY_RESULT_KEY = "Activity_result_key";
         private static final String TAG = "GameActivity";
@@ -39,7 +42,6 @@ public class Game extends AppCompatActivity {
         private TextView txtMineCount;
         private TextView txtTimer;
         public int clickCounter = 0;
-
 
         public int getBombNumber() {
             return bombNumber;
@@ -159,8 +161,9 @@ public class Game extends AppCompatActivity {
 
                 Context context = getBaseContext();
                 SharedPreferences sharedPref = context.getSharedPreferences(
-                        getString(R.string.preference_file_mins_records_easy) ,Context.MODE_PRIVATE);
-                String allRecs = sharedPref.getString(String.valueOf(R.string.saved_difficulty_key),"");
+                        getString(R.string.preference_file_mins_records_easy), Context.MODE_PRIVATE);
+
+                 String allRecs = sharedPref.getString(String.valueOf(R.string.saved_difficulty_key),"");
                 String[] record = allRecs.split(",");
 
                 for(int i=0; i<= record.length; i ++){
@@ -254,6 +257,9 @@ public class Game extends AppCompatActivity {
                                     //  TextView tv = (TextView) findViewById(R.id.Timer);
                                       txtTimer.setText(String.valueOf(time));
                                       time += 1;
+
+
+
                                   }
                               });
                           }
@@ -262,6 +268,72 @@ public class Game extends AppCompatActivity {
                 0,
                   //Set the amount of time between each execution (in milliseconds)
                 1000);
+
+
+//if (getRequestedOrientation()==ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE) {
+    final int startTime = time;
+    new Thread() {
+        @Override
+        public void run() {
+            try {
+                // code runs in a thread
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Intent intent = new Intent(getBaseContext(), Game.class);
+                       // intent.putExtra(MainActivity.ACTIVITY_RESULT_KEY, diff);
+                        //startActivity(intent);
+                        if ((startTime - time) % 2 == 0) {
+                            Random r = new Random();
+                            int x = r.nextInt(width);
+                            int y = r.nextInt(height);
+                            if (!getCellAt(x, y).isBomb()) {
+                                getCellAt(x, y).setBomb(true);
+                            }
+                        }
+                    }
+                });
+            } catch (final Exception ex) {
+                Log.i("---", "Exception in thread");
+            }
+        }
+    }.start();
+
+
+
+ /*   new Thread() {
+        @Override
+        public void run() {
+
+            // doLongOperation();
+
+
+            try {
+
+                // code runs in a thread
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Intent intent = new Intent(getBaseContext(), Game.class);
+                        // intent.putExtra(MainActivity.ACTIVITY_RESULT_KEY, diff);
+                        if (startTime - time % 60 == 0) {
+                            //startActivity(intent);
+                            Random r = new Random();
+                            int x = r.nextInt(width);
+                            int y = r.nextInt(height);
+                            if (!getCellAt(x, y).isBomb()) {
+                                getCellAt(x, y).setBomb(true);
+                            }
+                        }
+                    });
+            }
+
+            catch (final Exception ex) {
+                Log.i("---", "Exception in thread");
+
+        }
+            }}.start();
+    */
 
 
         Intent intent = getIntent();
